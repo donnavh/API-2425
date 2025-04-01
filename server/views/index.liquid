@@ -1,20 +1,24 @@
 {% layout "server/layouts/base.liquid" %}
-
+ 
 {% block content %}
-
+ 
 <h1 class="h1">{{ title }}</h1>
-
+ 
+<h2>Artists</h2>
 <ul class="grid">
-  {% for item in items %}
-    <li>
-      <a href="/plant/{{ item.id }}">
-        {% render 'server/components/card/card.liquid', item: item %}
-      </a>
-    </li>
+
+  {% for artist in artists %}
+<li>
+<a href="/artist/{{ artist.id }}">
+<div class="card">
+<img src="{{ artist.image }}" alt="{{ artist.name }}" width="200">
+<h3>{{ artist.name }}</h3>
+</div>
+</a>
+</li>
+
   {% endfor %}
 </ul>
-
-<h2>Random Coffee Image</h2>
-<img src="{{ img }}" alt="Random Coffee Image">
-
+ 
 {% endblock %}
+ 
