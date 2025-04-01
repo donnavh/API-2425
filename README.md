@@ -110,3 +110,8 @@ Als het werkt, zet je je server weer uit door in de terminal de toetscombinatie 
 - Optioneel: Volg het [NodeJS ‘Hello World’ voorbeeld](https://medium.com/@mohammedijas/hello-world-in-node-js-b333275ddc89)
 - Optioneel, iets technischer: Lees de eerste vijf delen van [Introduction to Node](https://nodejs.dev/en/learn/) als je een meer in-depth introductie wilt met de NodeJS ontwikkelomgeving.
 
+
+## Week 1
+- Inleding gekregen over het vak en wat de vereisten zijn en wat er van ons verwacht wordt, vervolgens heb ik een kleine oefening gedaan met het inladen van APIs
+- Vervolgens ben ik gaan brainstormen met wat voor idee ik zou willen doen
+
