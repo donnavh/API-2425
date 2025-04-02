@@ -34,6 +34,25 @@ const getSpotifyToken = async () => {
   }
 };
 
+
+const getArtistImage = async (artistId, token) => {
+  try {
+    const response = await axios.get(`https://api.spotify.com/v1/artists/${artistId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    if (response.data.images && response.data.images.length > 0) {
+      return response.data.images[0].url;
+    }
+    return null;
+  } catch (error) {
+    console.error(`Error fetching image for artist ${artistId}:`, error);
+    return null;
+  }
+};
+
 const getFeaturedArtists = async () => {
   const token = await getSpotifyToken();
   if (!token) return [];
@@ -43,16 +62,24 @@ const getFeaturedArtists = async () => {
       headers: {
         Authorization: `Bearer ${token}`
       },
-
     });
+
     const albums = response.data.albums.items;
     const artists = albums.flatMap(album => album.artists);
     const uniqueArtists = Array.from(new Map(artists.map(artist => [artist.id, artist])).values());
-    return uniqueArtists.map(artist => ({
-      id: artist.id,
-      name: artist.name,
-      image: artist.images ? .length ? artist.images[0].url : null
+
+    // Use Promise.all to fetch all artist images in parallel
+    const formattedArtists = await Promise.all(uniqueArtists.map(async (artist) => {
+      const image = await getArtistImage(artist.id, token);
+      console.log(`Artist: ${artist.name}, Image: ${image}`);
+      return {
+        id: artist.id,
+        name: artist.name,
+        image: image,
+      };
     }));
+
+    return formattedArtists;
   } catch (error) {
     console.error('Error fetching featured artists:', error);
     return [];
@@ -72,7 +99,7 @@ app
 
 app.get('/', async (req, res) => {
   const artists = await getFeaturedArtists();
-
+  console.log("donna wacht op antwoord");
 
   // return res.json(artists);
   return res.send(renderTemplate('server/views/index.liquid', {
