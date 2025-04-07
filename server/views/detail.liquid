@@ -1,6 +1,7 @@
 {% layout "server/layouts/base.liquid" %}
 
 {% block content %}
-<h1 class="h1">{{ item.name }}</h1>
-<img src="{{ item.image.src }}" alt="{{ item.image.alt }}" width="{{ item.image.width }}" height="{{ item.image.height }}" />
+<h1 class="h1">{{ artist.name }}</h1>
+<img src="{{ artist.image}}" alt="{{ artist.image.alt }}" width="{{ artist.image.width }}" height="{{ artist.image.height }}" />
+<p></p>
 {% endblock %}

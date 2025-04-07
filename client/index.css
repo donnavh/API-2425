@@ -27,6 +27,9 @@ header{
   /* padding: .5em; */
 }
 
+a{
+  width: 2em;
+}
 
 footer{
   background-color: #400073;

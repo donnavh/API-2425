@@ -4,6 +4,8 @@
 
 
 .card {
+  display: flex;
+  flex-direction: column;
   width: 80%;
   height: 12em;
   max-width: 300px;
@@ -15,7 +17,7 @@
 .card__image {
   width: 100%;
   height: auto;
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
   
 }
 
