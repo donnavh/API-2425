@@ -2,6 +2,10 @@
 
 {% block content %}
 <h1 class="h1">{{ artist.name }}</h1>
-<img src="{{ artist.image}}" alt="{{ artist.image.alt }}" width="{{ artist.image.width }}" height="{{ artist.image.height }}" />
-<p></p>
+<img src="{{ artist.image}}" alt="{{ artist.image.alt }}" width="400px " height="{{ artist.image.height }}" />
+<p class="p">{{ artist.followers}} </p>
+<p>{{ artist.genres }} </p>
+<p> {{ artist.popularity}} </p>
+<p> {{ artist.type}} </p>
+
 {% endblock %}

@@ -18,7 +18,10 @@ body {
 }
 
 main {
+  display: flex;
+  flex-direction: column;
   padding: 1rem;
+  background-color: lightpink;
 }
 
 header{
@@ -29,6 +32,10 @@ header{
 
 a{
   width: 2em;
+}
+
+img{
+  border-radius: 8px;
 }
 
 footer{
