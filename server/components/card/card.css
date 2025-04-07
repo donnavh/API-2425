@@ -1,10 +1,27 @@
+/* body{
+ width: 100vw;
+} */
+
+
 .card {
-  width: 100%;
+  width: 80%;
+  height: 12em;
   max-width: 300px;
+  background-color: #400073;
+  padding: .5em;
+  border-radius: 2px;
 }
 
 .card__image {
   width: 100%;
   height: auto;
   margin-top: 1rem;
+  
 }
+
+a{
+  /* text-decoration: none ; */
+  color: white;
+  padding: .5em;
+}
+

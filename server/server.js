@@ -99,7 +99,7 @@ app
 
 app.get('/', async (req, res) => {
   const artists = await getFeaturedArtists();
-  console.log("donna wacht op antwoord");
+  
 
   // return res.json(artists);
   return res.send(renderTemplate('server/views/index.liquid', {
@@ -121,7 +121,7 @@ app.get('/artist/:id', async (req, res) => {
     });
     const artist = response.data;
 
-    return res.send(renderTemplate('server/views/artist.liquid', {
+    return res.send(renderTemplate('server/views/detail.liquid', {
       title: artist.name,
       artist: {
         name: artist.name,
@@ -131,6 +131,7 @@ app.get('/artist/:id', async (req, res) => {
         image: artist.images.length ? artist.images[0].url : null,
       }
     }));
+  
   } catch (error) {
     console.error('Error fetching artist data:', error);
     return res.status(404).send('Artist not found');
