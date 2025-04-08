@@ -16,18 +16,23 @@ const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
 
 const getSpotifyToken = async () => {
   try {
-    const response = await axios.post(
-      'https://accounts.spotify.com/api/token',
-      new URLSearchParams({
-        grant_type: 'client_credentials'
-      }).toString(), {
-        headers: {
-          Authorization: `Basic ${Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      }
-    );
-    return response.data.access_token;
+    const response = await fetch('https://accounts.spotify.com/api/token', {
+      method: 'POST',
+      headers: {
+        Authorization: `Basic ${btoa(`${CLIENT_ID}:${CLIENT_SECRET}`)}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        grant_type: 'client_credentials',
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.access_token;
   } catch (error) {
     console.error('Error fetching Spotify token:', error);
     return null;
@@ -35,17 +40,27 @@ const getSpotifyToken = async () => {
 };
 
 
+
 const getArtistImage = async (artistId, token) => {
   try {
-    const response = await axios.get(`https://api.spotify.com/v1/artists/${artistId}`, {
+    const response = await fetch(`https://api.spotify.com/v1/artists/${artistId}`, {
+      method: 'GET',
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     });
 
-    if (response.data.images && response.data.images.length > 0) {
-      return response.data.images[0].url;
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
+
+    const data = await response.json();
+    console.log("data:", data); // ← hier kun je checken wat Spotify teruggeeft
+
+    if (data.images && data.images.length > 0) {
+      return data.images[0].url;
+    }
+
     return null;
   } catch (error) {
     console.error(`Error fetching image for artist ${artistId}:`, error);
