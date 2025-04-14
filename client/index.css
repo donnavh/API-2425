@@ -6,6 +6,8 @@
 @import '../server/layouts/base.css';
 @import '../server/views/index.css';
 
+@import '../server/layouts/all-artists/all-artists.css';
+
 /* component styling */
 @import '../server/components/card/card.css';
 
@@ -30,7 +32,9 @@ header{
 }
 
 a{
-  width: 2em;
+  /* width: 2em; */
+  /* color: black; */
+
 }
 
 img{

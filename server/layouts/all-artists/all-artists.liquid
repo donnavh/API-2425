@@ -1,3 +1,4 @@
+{% layout "server/layouts/base.liquid" %}
 
 {% block content %}
 
@@ -20,7 +21,7 @@
         <a href="/artist/{{ artist.id }}">
           <div class="artist-image">
             {% if artist.image %}
-              <img src="{{ artist.image }}" alt="{{ artist.name }}">
+              <img src="{{ artist.image }}" alt="{{ artist.name }}
             {% else %}
               <div class="no-image">
                 <span>No Image</span>

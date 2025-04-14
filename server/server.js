@@ -35,12 +35,36 @@ const getSpotifyToken = async () => {
   }
 };
 
-const getAllArtists = async () => {
+const getTopTracks = async (artistId, countryCode) => {
   const token = await getSpotifyToken();
   if (!token) return [];
 
   try {
-    const response = await fetch('https://api.spotify.com/v1/search?q=genre:*&type=artist&limit=10', {
+    const response = await fetch(`https://api.spotify.com/v1/artists/${artistId}/top-tracks?market=${countryCode}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.tracks || [];
+  } catch (error) {
+    console.error('Error fetching top tracks:', error);
+    return [];
+  }
+};
+
+const getAllArtists = async (limit) => {
+  const token = await getSpotifyToken();
+  if (!token) return [];
+
+  try {
+    const response = await fetch(`https://api.spotify.com/v1/search?q=genre:*&type=artist&limit=${limit}`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -70,6 +94,8 @@ const getAllArtists = async () => {
     return [];
   }
 };
+
+
 
 const getArtistImage = async (artistId, token) => {
   try {
@@ -161,13 +187,26 @@ app
     }));
   })
   .get('/all-artists', async (req, res) => {
-    const artists = await getAllArtists();
-
+    const limit = req.query.limit || 20
+    const artists = await getAllArtists(limit);
+    console.log(artists)
     return res.send(renderTemplate('server/layouts/all-artists/all-artists.liquid', {
       title: 'All Artists',
       artists
     }));
   })
+  .get('/top-tracks/:artistId', async(req, res) =>{
+    const { artistId = '' } = req.params;
+    const countryCode = req.query.country || 'NL';
+
+    try{
+      const tracks = await getTopTracks(artistId, countryCode);
+      res.json(tracks);
+    } catch(error){
+      console.error('Error fetching top tracks in /top-tracks route:', error);
+      res.status(500).json({error: 'Failed to fetch top tracks'});
+    }
+  });
   .get('/artist/:id', async (req, res) => {
     const artistId = req.params.id;
     const token = await getSpotifyToken();
