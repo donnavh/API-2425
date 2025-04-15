@@ -37,6 +37,7 @@ const getSpotifyToken = async () => {
 
 const getTopTracks = async (artistId, countryCode) => {
   const token = await getSpotifyToken();
+  // const [topTracks, setTopTracks] = useState([]);
   if (!token) return [];
 
   try {
@@ -206,9 +207,10 @@ app
       console.error('Error fetching top tracks in /top-tracks route:', error);
       res.status(500).json({error: 'Failed to fetch top tracks'});
     }
-  });
+  })
   .get('/artist/:id', async (req, res) => {
     const artistId = req.params.id;
+    const countryCode = 'NL'
     const token = await getSpotifyToken();
     if (!token) return res.status(500).send('Error fetching token');
 
@@ -237,7 +239,9 @@ app
           followers: artist.followers.total,
           popularity: artist.popularity,
           image: artist.images.length ? artist.images[0].url : null,
-        }
+        },
+    topTracks: await getTopTracks(artistId, countryCode),
+        
       }));
 
     } catch (error) {

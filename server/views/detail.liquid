@@ -8,5 +8,15 @@
 <p> Genres: {{ artist.genres }} </p>
 <p> {{ artist.popularity}} </p>
 <p> {{ artist.type}} </p>
+<h2> Top Tracks </h2>
+<ul>
+    {% if topTracks and topTracks.size > 0 %}
+        {% for track in topTracks %}
+            <li> {{ track.name }} </li>
+        {% endfor %}
+    {% else %}
+        <li>No top tracks available</li>
+    {% endif %}
+</ul>
 
 {% endblock %}
