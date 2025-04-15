@@ -12,7 +12,10 @@
 <ul>
     {% if topTracks and topTracks.size > 0 %}
         {% for track in topTracks %}
-            <li> {{ track.name }} </li>
+            <li> {{ track.name }} <br>
+                Album: {{track.album.name}}
+            </li>
+
         {% endfor %}
     {% else %}
         <li>No top tracks available</li>
