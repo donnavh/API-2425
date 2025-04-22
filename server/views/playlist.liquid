@@ -4,10 +4,10 @@
   <h1>{{ title }}</h1>
 
   {% if items.size > 0 %}
-    <ul class="playlist">
+    <ul class="artist-grid">
       {% for track in items %}
         <li class="track-card">
-          <img src="{{ track.album.images[0].url }}" alt="Album image" class="track-image" />
+          <img src="{{ track.album.images[0].url }}" style="view-transition-name: song_{{ track.id }} ;" alt="Album image" class="card__image" />
 
           <div class="track-info">
             <h2>{{ track.name }}</h2>

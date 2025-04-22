@@ -23,7 +23,7 @@
                 <h3>{{ track.name }}
                  </h3> <br>
 
-                 <img src="{{ track.album.images[0].url }}" alt="album image" class="toptrack-image" >
+                 <img src="{{ track.album.images[0].url }}" style="view-transition-name: song_{{ track.id }} ;" alt="album image" class="toptrack-image" >
                  <p>
                     Album: {{track.album.name}}
                  </p>

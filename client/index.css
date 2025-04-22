@@ -14,6 +14,34 @@
 /* details */
 @import '../server/views/detail.css';
 
+:root{
+  view-transition-name: root;
+}
+
+@view-transition{
+  navigation: auto; 
+}
+/* 
+::view-transition-old(root),
+::view-transition-new(root){
+  animation-duration: 0.4s;
+  animation-timing-function: ease-in-out;
+  animation-name: fade;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+} */
+
+/* html::view-transition {
+  animation-duration: 0.4s ;
+} */
+
 body {
   color:black;
   max-width: 100vw;
@@ -36,10 +64,53 @@ main {
 
 img{
   border-radius: 8px;
-  width: 20em;
+  width: 90%;
 }
+
+header {
+  padding: 1rem;
+  display: flex;
+  background-color: #400073;
+  color: white;
+}
+
+.header {
+  display: flex; 
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 1em;
+}
+
+
+nav{
+  display: flex;
+
+  background-color: white;
+  position: absolute;
+  right: 0;
+  padding: .5em;
+  margin-top: .5em;
+  gap: 20px;
+}
+
+
+nav a{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  border-radius: 4px;
+} 
+
+
+
 
 footer{
   background-color: #400073;
   color: white;
 }
+
+

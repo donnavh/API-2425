@@ -6,21 +6,23 @@
  
 <h2>Artists</h2>
 <ul class="grid">
-
   {% for artist in artists %}
-<li>
-<a href="/artist/{{ artist.id }}">
-<div class="card">
-<img class="card__image" src="{{ artist.image }}" alt="{{ artist.name }}">
-<h3>{{ artist.name }}</h3>
-</div>
-</a>
-</li>
-
+    <li>
+      <a href="/artist/{{ artist.id }}" class="card__link">
+        <div class="card">
+          <img 
+            class="card__image" 
+            src="{{ artist.image }}" 
+            style="view-transition-name: artist_{{ artist.id }}" 
+            alt="{{ artist.name }}"
+          >
+          <div class="card__content">
+            <h3>{{ artist.name }}</h3>
+          </div>
+        </div>
+      </a>
+    </li>
   {% endfor %}
 </ul>
-
-
  
 {% endblock %}
- 

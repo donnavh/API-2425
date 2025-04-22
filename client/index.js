@@ -44,3 +44,21 @@ function goToPlaylistPage() {
     window.location.href = `/playlist?ids=${query}`;
   }
 
+
+
+  document.querySelectorAll('.card__link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      // Get the href attribute from the link itself
+      const targetUrl = link.getAttribute('href');
+      
+      if (document.startViewTransition) {
+        document.startViewTransition(() => {
+          window.location.href = targetUrl;
+        });
+      } else {
+        window.location.href = targetUrl;
+      }
+    });
+  });
