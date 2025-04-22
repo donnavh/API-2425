@@ -15,41 +15,43 @@
   <div class="artist-count">
     Showing {{ artists.size }} artists
   </div>
-
-  <div class="artist-grid">
+  
+  <ul class="grid">
     {% for artist in artists %}
-      <div class="artist-card">
-        <a href="/artist/{{ artist.id }}">
-          <div class="artist-image">
+      <li>
+        <a href="/artist/{{ artist.id }}" class="card__link">
+          <div class="card">
             {% if artist.image %}
               <img src="{{ artist.image }}" class="card__image" alt="{{ artist.name }}">
             {% else %}
-              <div class= "no-image">
+              <div class="placeholder-image">
                 <span>No Image</span>
               </div>
             {% endif %}
-          </div>
-          <div class="artist-details">
-            <div class="artist-name">{{ artist.name }}</div>
-            <div class="artist-genres">
-              {% if artist.genres.size > 0 %}
-                {% assign genre_list = artist.genres | join: ', ' %}
-                {{ genre_list | truncate: 50 }}
-              {% else %}
-                No genres listed
-              {% endif %}
-            </div>
-            <div>
-              <small>Popularity</small>
-              <div class="popularity-bar">
-                <div class="popularity-fill" style="width: {{ artist.popularity }}%;"></div>
+  
+            <div class="card__content">
+              <h3>{{ artist.name }}</h3>
+              <div class="artist-genres">
+                {% if artist.genres.size > 0 %}
+                  {% assign genre_list = artist.genres | join: ', ' %}
+                  {{ genre_list | truncate: 50 }}
+                {% else %}
+                  <span>No genres listed</span>
+                {% endif %}
+              </div>
+              <div>
+                <small>Popularity</small>
+                <div class="popularity-bar">
+                  <div class="popularity-fill" style="width: {{ artist.popularity }}%;"></div>
+                </div>
               </div>
             </div>
           </div>
         </a>
-      </div>
+      </li>
     {% endfor %}
-  </div>
+  </ul>
+  
 {% endblock %}
 
 

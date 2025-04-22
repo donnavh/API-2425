@@ -6,11 +6,11 @@
 @import '../server/layouts/base.css';
 @import '../server/views/index.css';
 
-@import '../server/layouts/all-artists/all-artists.css';
+
 
 /* component styling */
 @import '../server/components/card/card.css';
-
+@import '../server/layouts/all-artists/all-artists.css';
 /* details */
 @import '../server/views/detail.css';
 
@@ -53,19 +53,9 @@ main {
   display: flex;
   flex-direction: column;
   padding: 1rem;
-  background-color: white;
+  /* background-color: white; */
 }
 
-/* header{
-  background-color: #400073;
-  color: white;
-} */
-
-
-img{
-  border-radius: 8px;
-  width: 90%;
-}
 
 header {
   padding: 1rem;

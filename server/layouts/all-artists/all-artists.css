@@ -1,8 +1,9 @@
 /* Base styles */
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   color: #333;
   line-height: 1.5;
+  background-color: #f8f8f8;
 }
 
 /* Grid layout */
@@ -46,11 +47,27 @@ body {
   display: block;
 }
 
+/* Placeholder for missing image */
+.placeholder-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #aaa;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Card content */
 .card__content {
   padding: 16px;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .card__content h3 {
@@ -60,28 +77,39 @@ body {
   color: #222;
 }
 
-/* For Spotify-themed design */
+.artist-genres {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+/* Popularity bar */
+.popularity-bar {
+  background-color: #ddd;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.popularity-fill {
+  background-color: #1db954;
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+/* Spotify theme override */
 .spotify-theme .card {
   background-color: #282828;
 }
 
-.spotify-theme .card__content h3 {
+.spotify-theme .card__content h3,
+.spotify-theme .artist-genres {
   color: white;
 }
 
 .spotify-theme .card:hover {
   background-color: #333333;
-}
-
-/* For when there's no image */
-.placeholder-image {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  background-color: #eee;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #aaa;
 }
 
 /* Responsive adjustments */
@@ -97,12 +125,16 @@ body {
     grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     gap: 12px;
   }
-  
+
   .card__content {
     padding: 12px;
   }
-  
+
   .card__content h3 {
     font-size: 14px;
+  }
+
+  .artist-genres {
+    font-size: 13px;
   }
 }
