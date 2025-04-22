@@ -1,5 +1,52 @@
 header {
   padding: 1rem;
+  display: flex;
+
+}
+
+nav{
+  display: flex;
+
+  background-color: white;
+  position: absolute;
+  right: 0;
+  padding: .5em;
+}
+
+header{
+  display: flex;
+  background-color: #400073;
+  color: white;
+}
+
+.header {
+  display: flex; 
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 1em;
+}
+
+.header nav {
+  /* display: flex; */
+  gap: 20px;
+}
+
+.header nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.header nav a:hover {
+  background-color: #f0f0f0;
+}
+
+.header nav a.active {
+  background-color: #1DB954;
+  color: white;
 }
 
 footer {

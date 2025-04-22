@@ -18,8 +18,19 @@
 
 <body>
   <header>
-    Deze header staat op elke pagina
+    {% comment %} Deze header staat op elke pagina {% endcomment %}
+    <div class="header">
+    {% comment %} <h1>{{ title }}</h1> {% endcomment %}
+    <nav>
+      <a href="/">Featured Artists</a>
+      <a href="/all-artists" class="active">All Artists</a>
+      <a href="/server/views/playlist.liquid">Playlist</a>
+    </nav>
+  </div>
+
   </header>
+
+  
   <main>
     {% block content %}{% endblock %}
   </main>

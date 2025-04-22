@@ -11,6 +11,9 @@
 /* component styling */
 @import '../server/components/card/card.css';
 
+/* details */
+@import '../server/views/detail.css';
+
 body {
   color:black;
   max-width: 100vw;
@@ -25,11 +28,10 @@ main {
   background-color: white;
 }
 
-header{
+/* header{
   background-color: #400073;
   color: white;
-  /* padding: .5em; */
-}
+} */
 
 
 img{

@@ -4,24 +4,39 @@
 <h1 class="h1">{{ artist.name }}</h1>
 <img src="{{ artist.image}}" alt="{{ artist.image.alt }}" width="400px " height="{{ artist.image.height }}" />
 
+<div class="artist-info">
 <p class="p" > Followers: {{ artist.followers}} </p>
 <p> Genres: {{ artist.genres }} </p>
 <p> {{ artist.popularity}} </p>
 <p> {{ artist.type}} </p>
+</div>
+
 <h2> Top Tracks </h2>
-<ul>
+
+
+{% comment %} <div class="artist-grid"> {% endcomment %}
+<ul class="artist-grid">
     {% if topTracks and topTracks.size > 0 %}
         {% for track in topTracks %}
-            <li> {{ track.name }} <br>
-                Album: {{track.album.name}}
-            </li>
-            
+            <li class="track-card"> 
 
+                <h3>{{ track.name }}
+                 </h3> <br>
+
+                 <img src="{{ track.album.images[0].url }}" alt="album image" class="toptrack-image" >
+                 <p>
+                    Album: {{track.album.name}}
+                 </p>
+                <button class="add-playlist-button" data-id="{{ track.id }}" data-track-uri="{{ track.uri }}">
+                    Add to playlist
+                </button>
+            </li>
 
         {% endfor %}
     {% else %}
         <li>No top tracks available</li>
     {% endif %}
 </ul>
+
 
 {% endblock %}

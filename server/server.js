@@ -203,6 +203,7 @@ app
     try{
       const tracks = await getTopTracks(artistId, countryCode);
       res.json(tracks);
+      console.log(tracks);
     } catch(error){
       console.error('Error fetching top tracks in /top-tracks route:', error);
       res.status(500).json({error: 'Failed to fetch top tracks'});
@@ -248,7 +249,39 @@ app
       console.error('Error fetching artist data:', error);
       return res.status(500).send('Server error');
     }
-  });
+  })
+  .get('/playlist', async (req, res) => {
+    // Pad naar de favorieten pagina
+
+  const ids = req.query.ids ? req.query.ids.split(',') : [];
+ 
+  // Check of er geen favorieten zijn
+  if (!ids.length) {
+    return res.send(renderTemplate('server/views/playlist.liquid', {
+      title: 'Playlist',
+      items: []
+    }));
+  }
+ 
+  const items = [];
+ 
+  // Haal de de details op van de films met de opgegeven ids
+  for (const id of ids) {
+    const url = `https://api.spotify.com/v1/tracks/${id}`;
+    const response = await fetch(url);
+    const track = await response.json();
+ 
+    // voeg de films toe aan de items array
+    items.push(track);  
+  }
+ 
+  // Render de template met de opgehaalde films
+  return res.send(renderTemplate('server/views/playlist.liquid', {
+    title: 'Playlist',
+    items
+  }));
+});
+
 
 // Start server
 app.listen(3000, () => console.log('Server available on http://localhost:3000'));
