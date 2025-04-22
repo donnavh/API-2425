@@ -11,6 +11,18 @@ nav{
   position: absolute;
   right: 0;
   padding: .5em;
+  margin-top: .5em;
+  gap: 20px;
+}
+
+nav a{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  border-radius: 4px;
 }
 
 header{
@@ -27,18 +39,7 @@ header{
   padding: 1em;
 }
 
-.header nav {
-  /* display: flex; */
-  gap: 20px;
-}
 
-.header nav a {
-  text-decoration: none;
-  color: #333;
-  font-weight: 500;
-  padding: 5px 10px;
-  border-radius: 4px;
-}
 
 .header nav a:hover {
   background-color: #f0f0f0;

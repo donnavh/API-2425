@@ -21,3 +21,26 @@ function addToPlaylist(id) {
   }
 }
 
+var playlistLink = document.querySelector('.playlistlink');
+
+if (playlistLink){
+    playlistLink.addEventListener('click', (e) =>{
+        goToPlaylistPage();
+    })
+}
+
+function goToPlaylistPage() {
+    let playlist = JSON.parse(localStorage.getItem('playlist')) || [];
+   
+    // Filter out null/undefined/empty
+    playlist = playlist.filter(id => id);
+   
+    if (playlist.length === 0) {
+      alert("No tracks yet!");
+      return;
+    }
+   
+    const query = playlist.join(',');
+    window.location.href = `/playlist?ids=${query}`;
+  }
+

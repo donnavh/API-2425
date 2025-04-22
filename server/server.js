@@ -251,37 +251,42 @@ app
     }
   })
   .get('/playlist', async (req, res) => {
-    // Pad naar de favorieten pagina
-
-  const ids = req.query.ids ? req.query.ids.split(',') : [];
- 
-  // Check of er geen favorieten zijn
-  if (!ids.length) {
+    const ids = req.query.ids ? req.query.ids.split(',') : [];
+  
+    if (!ids.length) {
+      return res.send(renderTemplate('server/views/playlist.liquid', {
+        title: 'Playlist',
+        items: []
+      }));
+    }
+  
+    const token = await getSpotifyToken(); // ← Zorg dat je een geldige token krijgt
+    if (!token) return res.status(500).send('No token');
+  
+    const items = [];
+  
+    for (const id of ids) {
+      const response = await fetch(`https://api.spotify.com/v1/tracks/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+  
+      if (!response.ok) {
+        console.error(`Error fetching track ${id}:`, response.status);
+        continue;
+      }
+  
+      const track = await response.json();
+      items.push(track);
+    }
+  
     return res.send(renderTemplate('server/views/playlist.liquid', {
       title: 'Playlist',
-      items: []
+      items
     }));
-  }
- 
-  const items = [];
- 
-  // Haal de de details op van de films met de opgegeven ids
-  for (const id of ids) {
-    const url = `https://api.spotify.com/v1/tracks/${id}`;
-    const response = await fetch(url);
-    const track = await response.json();
- 
-    // voeg de films toe aan de items array
-    items.push(track);  
-  }
- 
-  // Render de template met de opgehaalde films
-  return res.send(renderTemplate('server/views/playlist.liquid', {
-    title: 'Playlist',
-    items
-  }));
-});
-
+  });
+  
 
 // Start server
 app.listen(3000, () => console.log('Server available on http://localhost:3000'));
