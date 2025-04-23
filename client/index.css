@@ -21,7 +21,8 @@
 @view-transition{
   navigation: auto; 
 }
-/* 
+
+
 ::view-transition-old(root),
 ::view-transition-new(root){
   animation-duration: 0.4s;
@@ -36,11 +37,11 @@
   to {
     opacity: 1;
   }
-} */
+}
 
-/* html::view-transition {
+html::view-transition {
   animation-duration: 0.4s ;
-} */
+}
 
 body {
   color:black;
@@ -53,7 +54,6 @@ main {
   display: flex;
   flex-direction: column;
   padding: 1rem;
-  /* background-color: white; */
 }
 
 

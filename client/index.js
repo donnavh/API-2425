@@ -18,6 +18,15 @@ function addToPlaylist(id) {
   if (!playlist.includes(id)) {
     playlist.push(id);
     localStorage.setItem('playlist', JSON.stringify(playlist));
+
+    // send to node server
+    fetch('/api/playlist/' + id, {
+      method: 'POST', 
+      headers: {
+        'Content-type' : 'application/json'
+      },
+      body:  JSON.stringify( {id})
+    });
   }
 }
 

@@ -4,7 +4,12 @@ import { logger } from '@tinyhttp/logger';
 import { Liquid } from 'liquidjs';
 import sirv from 'sirv';
 import fetch from 'node-fetch';
+import { LocalStorage } from 'node-localstorage';
 
+
+
+
+const localStorage = new LocalStorage('./playlist');
 
 
 const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
@@ -34,6 +39,8 @@ const getSpotifyToken = async () => {
     return null;
   }
 };
+
+
 
 const getTopTracks = async (artistId, countryCode) => {
   const token = await getSpotifyToken();
@@ -251,7 +258,8 @@ app
     }
   })
   .get('/playlist', async (req, res) => {
-    const ids = req.query.ids ? req.query.ids.split(',') : [];
+    // const ids = req.query.ids ? req.query.ids.split(',') : [];
+    const ids = getPlaylist();
   
     if (!ids.length) {
       return res.send(renderTemplate('server/views/playlist.liquid', {
@@ -287,6 +295,35 @@ app
     }));
   });
   
+
+// local storage
+
+function getPlaylist() {
+  const playlist = JSON.parse(localStorage.getItem('playlist') || '[]');
+  // return JSON.parse(localStorage.getItem('playlist') || '[]' );
+  console.log('Fetched playlist:', playlist); // Log fetched playlist
+  return playlist;
+}
+
+function savePlaylist(playlist) {
+  console.log('Saving playlist:', playlist); // Log the playlist being saved
+  localStorage.setItem('playlist', JSON.stringify(playlist));
+}
+
+app.post('/api/playlist/:id', async (req, res) => {
+  const id = req.params.id;
+  let playlist = getPlaylist();
+
+  if (!playlist.includes(id)) {
+    playlist.push(id);
+    savePlaylist(playlist);
+  }
+  return res.json({ status: 'added', playlist });
+  
+});
+
+
+
 
 // Start server
 app.listen(3000, () => console.log('Server available on http://localhost:3000'));
