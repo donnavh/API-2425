@@ -1,6 +1,3 @@
-/* body{
- width: 100vw;
-} */
 
 
 .card {
@@ -23,8 +20,7 @@
 }
 
 a{
-  /* text-decoration: none ; */
-  /* color: white; */
+
   padding: .5em;
 }
 

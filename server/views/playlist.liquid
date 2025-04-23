@@ -1,31 +1,28 @@
 {% layout "server/layouts/base.liquid" %}
- 
+
 {% block content %}
   <h1>{{ title }}</h1>
 
   {% if items.size > 0 %}
-    <ul class="artist-grid">
+    <ul class="grid">
       {% for track in items %}
-        <li class="track-card">
-          <img src="{{ track.album.images[0].url }}" style="view-transition-name: song_{{ track.id }} ;" alt="Album image" class="card__image" />
+        <li class="card">
+          <img 
+            src="{{ track.album.images[0].url }}" 
+            style="view-transition-name: song_{{ track.id }};" 
+            alt="Album image" 
+            class="card__image" 
+          />
 
           <div class="track-info">
-            <h2>{{ track.name }}</h2>
-            <p>
+            <h2 class="track-title">{{ track.name }}</h2>
+            <p class="track-meta">
               Artiest: 
               {% for artist in track.artists %}
                 {{ artist.name }}{% unless forloop.last %}, {% endunless %}
               {% endfor %}
             </p>
-            <p>Album: {{ track.album.name }}</p>
-
-
-            {% if track.preview_url %}
-              <audio controls>
-                <source src="{{ track.preview_url }}" type="audio/mpeg" />
-                Je browser ondersteunt geen audio.
-              </audio>
-            {% endif %}
+            <p class="track-meta">Album: {{ track.album.name }}</p>
           </div>
         </li>
       {% endfor %}
