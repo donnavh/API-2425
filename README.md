@@ -113,5 +113,29 @@ Als het werkt, zet je je server weer uit door in de terminal de toetscombinatie 
 
 ## Week 1
 - Inleding gekregen over het vak en wat de vereisten zijn en wat er van ons verwacht wordt, vervolgens heb ik een kleine oefening gedaan met het inladen van APIs
-- Vervolgens ben ik gaan brainstormen met wat voor idee ik zou willen doen
+- Vervolgens ben ik gaan brainstormen met wat voor idee ik zou willen doen en gaan bekijken wat het idee van de opdracht precies zou zijn. 
+- ik heb een eerste opzet gemaakt voor een idee en deze gepitcht om te bespreken of dit werkt. 
+    - Een idee van spotify en hier elementen uit halen om items in een playlist te kunnen toevoegen. We hebben besproken of dit een goed idee was en of dit goed was om hiermee door te gaan en dat was goed. 
+    - Voordat ik ging beginnen heb ik wat onderzoek gedaan naar wat API's precies zijn omdat dit de eerste keer zou zijn dat ik hiermee zou gaan werken en verder ook niet veel ervaring heb met javascript en dit nog best lastig kan zijn
+    - mijn content API's heb ik dus gekozen en kan ik beginnen met het opzetten. het is nog een beetje lastig omddat ik niet goed wist waar ik moest beginnen en hoe het precies werkte maar daarom hebben we gelukkig uitleg gekregen. 
+Vervolgens was mijn volgende stap om te kijken hoe ik de API zou gaan moeten inladen en hier had ik een token voor nodig die ik aan moest gaan vragen. Ik dacht dat dit erg lastig zou gaan zijn maar als je betaald spotify gebruiker bent is het volgensmij iets gemakkelijker te krijgen. Dus dit ging uiteindelijk toch best snel 
+
+Toen werd het tijd om de elementen uit spotify ook daadwerkelijk in te laden. Dit was voor mij nog het meest lastig denk ik. We hebben wat uitleg gekregen over hoe dit te doen is alleen was mijn Spotify API toch iets lastiger te gebruiken dan degene die we als voorbeeld gekregen hebben. Dus de komende dagen is dit toen vooral mijn focus geweest. Het onderzoeken van hoe de spotify API werkt en welke informatie ik hiermee kan verkrijgen die voor mij van toepassing is. En vervolgens hoe ik dit voor elkaar kan krijgen. Ik heb veel geprobeerd om de eerste data erin te krijgen. Ik snap dat als je content wil inladen van een API dat je dan een plek nodig hebt om dit van te halen en ook dat je aanmoet geven welke informatie er dan vertoond moet gaan worden. 
+    Eerst heb ik dus geprobeerd om de featured artists te laten tonen zodat ik een begin had om content in te laden en vanuit daar verder kon werken en uitvogelen hoe de rest tot stand zou komen . 
+
+##Week 2 
+- Na de eerste week veel onderzoek te doen en veel vastlopen omdat alles nieuw is en ik nog niet goed weet waar ik moet beginnen. Is het dan tijd om toch te beginnen met code schrijven en maar te gaan proberen om vast te lopen en hoe ver ik kom
+- ik ben begonnen met de index pagina te maken en hier artiesten te laten zien die spotify aanraad. ik begon om een functie op te stellen voor deze featured artists. Spotify geeft je bepaalde categorieen waar je content uit kan halen en welke elementen je hier voor moet gebruiken. Hier ben ik begonnne met de functie aan te maken voor de featured artists waarin ik de afbeelding van de desbetreffende artiest wilde krijgen en de naam van de artiest. Eerst kwam ik erachter dat de token maar een bepaalde tijd geldig is en je daarom dus toch nog geen info krijgt
+- vervolgens heb ik via de spotify site proberen vinden hoe ik ervoor kan zorgen dat de token blijft werken wanneer ik bezig ben en ik niet elke keer dit probleem blijf krijgen, spotify heeft hier al info over 
+
+
+
+
+gemaakte stappen: 
+- featured artists pagina
+- all artists pagina
+- detail pagina 
+- top tracks 
+- add to playlist 
+
 
