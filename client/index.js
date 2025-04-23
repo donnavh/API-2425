@@ -13,20 +13,23 @@ buttons.forEach(button => {
 });
 
 function addToPlaylist(id) {
+  // sends an id to the playlist/ server
   console.log('Adding to playlist:', id);
   const playlist = JSON.parse(localStorage.getItem('playlist')) || [];
+  // haalt de huidige playlist op en als deze nog leeg is, een nieuwe lege array
+
   if (!playlist.includes(id)) {
     playlist.push(id);
     localStorage.setItem('playlist', JSON.stringify(playlist));
+    //kijken of het nummer er al in zit en anders word hij toegevoegd
 
-    // send to node server
-    fetch('/api/playlist/' + id, {
-      method: 'POST', 
-      headers: {
-        'Content-type' : 'application/json'
-      },
-      body:  JSON.stringify( {id})
-    });
+    // Send to server to update node-localstorage
+    fetch(`/api/playlist/${id}`, {
+      method: 'POST'
+    })
+    .then(res => res.json())
+    .then(data => console.log('✅ Server saved playlist:', data))
+    .catch(err => console.error('❌ Error saving to server:', err));
   }
 }
 

@@ -4,17 +4,32 @@ import { logger } from '@tinyhttp/logger';
 import { Liquid } from 'liquidjs';
 import sirv from 'sirv';
 import fetch from 'node-fetch';
-import { LocalStorage } from 'node-localstorage';
+import { LocalStorage } from 'node-localstorage'; 
+// gegevens worden op de server opgeslagen 
 
+// import { json } from '@tinyhttp/body';
 
 
 
 const localStorage = new LocalStorage('./playlist');
+// maakt de map playlist waar het playlist bestand instaat, op de server
 
 
 const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
 const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
 
+const app = new App();
+
+// app.use(async (req, res, next) => {
+//   await json()(req, res, next);
+// });
+
+// om liquid bestanden te renderen 
+const engine = new Liquid({
+  extname: '.liquid',
+});
+
+// refresht de spotify tokenj
 const getSpotifyToken = async () => {
   try {
     const response = await fetch('https://accounts.spotify.com/api/token', {
@@ -41,7 +56,7 @@ const getSpotifyToken = async () => {
 };
 
 
-
+// haalt de populairste nummers van een artiest op
 const getTopTracks = async (artistId, countryCode) => {
   const token = await getSpotifyToken();
   // const [topTracks, setTopTracks] = useState([]);
@@ -66,6 +81,7 @@ const getTopTracks = async (artistId, countryCode) => {
     return [];
   }
 };
+
 
 const getAllArtists = async (limit) => {
   const token = await getSpotifyToken();
@@ -104,7 +120,7 @@ const getAllArtists = async (limit) => {
 };
 
 
-
+// haalt de afbeeldingen van de artiesen op
 const getArtistImage = async (artistId, token) => {
   try {
     const response = await fetch(`https://api.spotify.com/v1/artists/${artistId}`, {
@@ -131,6 +147,7 @@ const getArtistImage = async (artistId, token) => {
   }
 };
 
+// haalt nieuwe albums op en de artisten hiervan
 const getFeaturedArtists = async () => {
   const token = await getSpotifyToken();
   if (!token) return [];
@@ -168,11 +185,8 @@ const getFeaturedArtists = async () => {
   }
 };
 
-const engine = new Liquid({
-  extname: '.liquid',
-});
 
-const app = new App();
+
 
 // Helper function for rendering templates
 const renderTemplate = (template, data) => {
@@ -185,7 +199,9 @@ const renderTemplate = (template, data) => {
 
 app
   .use(logger())
+  // logt alle requests
   .use('/', sirv('dist'))
+  // Servert CSS/JS/afbeeldingen uit de 'dist' map
   .get('/', async (req, res) => {
     const artists = await getFeaturedArtists();
 
@@ -258,7 +274,10 @@ app
     }
   })
   .get('/playlist', async (req, res) => {
-    // const ids = req.query.ids ? req.query.ids.split(',') : [];
+      // Haalt de opgeslagen track-ID’s op
+  // Voor elke ID vraagt hij de track-informatie op bij Spotify
+  // Stuurt die gegevens naar een template om te renderen op de pagina
+  
     const ids = getPlaylist();
   
     if (!ids.length) {
@@ -275,6 +294,7 @@ app
   
     for (const id of ids) {
       const response = await fetch(`https://api.spotify.com/v1/tracks/${id}`, {
+      
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -299,18 +319,22 @@ app
 // local storage
 
 function getPlaylist() {
+// leest de playlist uit het lokale bestand van de server
   const playlist = JSON.parse(localStorage.getItem('playlist') || '[]');
-  // return JSON.parse(localStorage.getItem('playlist') || '[]' );
+  
   console.log('Fetched playlist:', playlist); // Log fetched playlist
   return playlist;
 }
 
 function savePlaylist(playlist) {
-  console.log('Saving playlist:', playlist); // Log the playlist being saved
+  // slaat de array van track ids op
+  console.log('💾 Saving to NODE localStorage:', playlist);
   localStorage.setItem('playlist', JSON.stringify(playlist));
 }
 
 app.post('/api/playlist/:id', async (req, res) => {
+   // Controleert of track al in de playlist staat, anders wordt hij toegevoegd
+  // Wordt aangeroepen vanaf de client met fetch()
   const id = req.params.id;
   let playlist = getPlaylist();
 
@@ -321,6 +345,17 @@ app.post('/api/playlist/:id', async (req, res) => {
   return res.json({ status: 'added', playlist });
   
 });
+app.post('/api/playlist', (req, res) => {
+  const { tracks } = req.body;
+
+  if (!Array.isArray(tracks)) {
+    return res.status(400).json({ error: 'Invalid playlist data' });
+  }
+
+  savePlaylist(tracks);
+  return res.json({ status: 'playlist saved', playlist: tracks });
+});
+
 
 
 
