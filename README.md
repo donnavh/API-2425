@@ -123,10 +123,35 @@ Vervolgens was mijn volgende stap om te kijken hoe ik de API zou gaan moeten inl
 Toen werd het tijd om de elementen uit spotify ook daadwerkelijk in te laden. Dit was voor mij nog het meest lastig denk ik. We hebben wat uitleg gekregen over hoe dit te doen is alleen was mijn Spotify API toch iets lastiger te gebruiken dan degene die we als voorbeeld gekregen hebben. Dus de komende dagen is dit toen vooral mijn focus geweest. Het onderzoeken van hoe de spotify API werkt en welke informatie ik hiermee kan verkrijgen die voor mij van toepassing is. En vervolgens hoe ik dit voor elkaar kan krijgen. Ik heb veel geprobeerd om de eerste data erin te krijgen. Ik snap dat als je content wil inladen van een API dat je dan een plek nodig hebt om dit van te halen en ook dat je aanmoet geven welke informatie er dan vertoond moet gaan worden. 
     Eerst heb ik dus geprobeerd om de featured artists te laten tonen zodat ik een begin had om content in te laden en vanuit daar verder kon werken en uitvogelen hoe de rest tot stand zou komen . 
 
-##Week 2 
+## Week 2 
 - Na de eerste week veel onderzoek te doen en veel vastlopen omdat alles nieuw is en ik nog niet goed weet waar ik moet beginnen. Is het dan tijd om toch te beginnen met code schrijven en maar te gaan proberen om vast te lopen en hoe ver ik kom
 - ik ben begonnen met de index pagina te maken en hier artiesten te laten zien die spotify aanraad. ik begon om een functie op te stellen voor deze featured artists. Spotify geeft je bepaalde categorieen waar je content uit kan halen en welke elementen je hier voor moet gebruiken. Hier ben ik begonnne met de functie aan te maken voor de featured artists waarin ik de afbeelding van de desbetreffende artiest wilde krijgen en de naam van de artiest. Eerst kwam ik erachter dat de token maar een bepaalde tijd geldig is en je daarom dus toch nog geen info krijgt
-- vervolgens heb ik via de spotify site proberen vinden hoe ik ervoor kan zorgen dat de token blijft werken wanneer ik bezig ben en ik niet elke keer dit probleem blijf krijgen, spotify heeft hier al info over 
+- vervolgens heb ik via de spotify site proberen vinden hoe ik ervoor kan zorgen dat de token blijft werken wanneer ik bezig ben en ik niet elke keer dit probleem blijf krijgen, spotify heeft hier al info over online staan dus kan ik dit gebruiken om te zorgen dat de token zich blijft refreshen en ik gebruik kan maken van de spotify API
+- nu de token blijft werken kan ik echt proberen om data uit de api te halen, heb op de liquid pagina een opzet gemaakt waardoor de afbeeldingen van de artiesten op het scherm komen samen met hun naam. Deze geef ik vorm als een soort kaartjes die in een grid staan. als eerst komen alleen de namen en komt er een placeholder te staan van de afbeeldingen in de kaart. 
+
+<img src="/Scherm­afbeelding 2025-04-01 om 15.40.16.png" alt="foto van error">
+
+## Week 3
+
+Hierna was ik in de weer over hoe ik dit goed kon krijgen omdat ik data kon inladen over de artiesten en informatie kon krijgen alleen niet de afbeeldingen. ik heb geprobeerd in het liquid bestand of ik de afbeeldingen wel goed tag en hier leek niks mis mee te zijn. tot dat ik ging bespreken met klasgenoten en kijken naar de fouten om erachter te komen dat ik een aparte functie moest gaan aanmaken om de afbeedingen hierin te kunnen zetten. 
+- Hiervoor heb ik de functie aangemaakt, 
+    const getArtistImage = async (artistId, token)
+    hier vraag ik de api om data te halen van elke artiest en hiervan de afbeelding te pakken om deze in te kunnen laden. Hiermee heb ik aangegeven dat ik afbeeldingen wil krijgen en deze vervolgens in mijn liquid weer aangepsroken om op de pagina te krijgen. 
+
+
+Omdat ik wilde dat je van verschillende artiesten tracks kon toevoegen aan je playlist, kwam ik daar nu nog niet erg ver mee. maar ook zou de keuze van artiesten niet erg groot zijn, heb ik een extra pagina toegevoegd voor alle artiesten. Hierbij roep ik de api op om data van maximaal 50 artiesten op te halen en deze weer te geven. ik vraag dan op de naam, afbeelding, het genre en de populariteit van deze artiest. Hierbij heb ik gebruik gemaakt van de spotify web api voor several artists en heb ik deze all artists genoemd. 
+
+## Week 4
+
+Toen ben ik terug gaan kijken op het idee wat ik wilde uitwerken en hoever ik hiermee was. Ook omdat ik onderschat had dat spotify best een lastig project bleek te zijn. Ik heb zeker nog niet de functionaliteiten die ik wilde hebben. Met name dan het toevoegen van items aan je playlist wilde ik erg graan in mijn applicatie hebben.
+Eerst is het misschien handig om uberhaupt tracks te hebben op mijn pagina om aan mijn playlist te kunnen toevoegen. Gelukkig is er al data die ik van de artiesten ophaal. Vervolgens ga ik dus een nieuwe functie aanmaken om de toptracks van de desbetreffende artiest op te roepen. Op de detailpagina vraag ik om de toptracks van de artiest, welke ook is aangepast op de regio van mijn spotify. 
+
+dit doe ik door de functie van toptracks aan te maken. 
+const getTopTracks = async (artistId, countryCode)
+
+
+ Ook gezien de tijd wist ik dat het nog lastig ging worden. In mijn hoofd wilde ik het graag echt laten werken maar dit is toch niet realistich dus heb ik het voor deze vorm op een andere manier gedaan. Ik maak een pagina die ik playlist noem om de tracks hierin te kunnen laten zien. en hier de tracks die ik wil toevoegen naartoe stuur. 
+ Dus vanaf nu is er op de detailpagina van de artiest zijn informatie te zien en daaronder de beste nummers die je kan toevoegen. 
 
 
 
