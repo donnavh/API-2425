@@ -20,16 +20,21 @@ const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
 
 const app = new App();
 
-// app.use(async (req, res, next) => {
-//   await json()(req, res, next);
-// });
+// eerst token ophalen
+// API call doen
+// checken of het goed ging
+// data eruit halen
+// formatteren en terug geven aan de pagina
+
+
+
 
 // om liquid bestanden te renderen 
 const engine = new Liquid({
   extname: '.liquid',
 });
 
-// refresht de spotify tokenj
+// refresht de spotify token elke keer 
 const getSpotifyToken = async () => {
   try {
     const response = await fetch('https://accounts.spotify.com/api/token', {
@@ -59,9 +64,9 @@ const getSpotifyToken = async () => {
 // haalt de populairste nummers van een artiest op
 const getTopTracks = async (artistId, countryCode) => {
   const token = await getSpotifyToken();
-  // const [topTracks, setTopTracks] = useState([]);
   if (!token) return [];
 
+  // stuurt een get request naar de api om de top tracks van de artiest te verkrijgen
   try {
     const response = await fetch(`https://api.spotify.com/v1/artists/${artistId}/top-tracks?market=${countryCode}`, {
       method: 'GET',
@@ -83,11 +88,14 @@ const getTopTracks = async (artistId, countryCode) => {
 };
 
 
+// haalt de lijst op van algemene artiesten met genres en populariteit 
 const getAllArtists = async (limit) => {
+  // eerst checken of de spotify token het doet, anders kan er helemaal niks gebeuremn
   const token = await getSpotifyToken();
   if (!token) return [];
 
   try {
+    // stuur een verzoek naar spotify search api om door artiesten heen te zoeken, q=genre om alle genres te pakken
     const response = await fetch(`https://api.spotify.com/v1/search?q=genre:*&type=artist&limit=${limit}`, {
       method: 'GET',
       headers: {
@@ -96,13 +104,17 @@ const getAllArtists = async (limit) => {
     });
 
     if (!response.ok) {
+      // als er een fout is komt er een eror in zodat we dat later kunnen opvangen 
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
     const data = await response.json();
+    // zet het antwoord van spotify om in een json form
     const artists = data.artists.items;
+    // pak hieruit de lijst met artiesten
 
     const formattedArtists = await Promise.all(artists.map(async (artist) => {
+      // format de lijst in een nieuw object om allen te krijgen wat je echt nodig hebt
       return {
         id: artist.id,
         name: artist.name,
@@ -113,6 +125,7 @@ const getAllArtists = async (limit) => {
     }));
 
     return formattedArtists;
+    // als alles goed gaat krijg je de geformatteerde lijst terug, anders tonen ze een error en krijg je een lege lijst terug
   } catch (error) {
     console.error('Error fetching all artists:', error);
     return [];
@@ -188,7 +201,8 @@ const getFeaturedArtists = async () => {
 
 
 
-// Helper function for rendering templates
+// liquid template renderen 
+// wordt gebruikt om de html op te bouwen
 const renderTemplate = (template, data) => {
   const templateData = {
     NODE_ENV: process.env.NODE_ENV || 'production',
@@ -197,6 +211,9 @@ const renderTemplate = (template, data) => {
   return engine.renderFileSync(template, templateData);
 };
 
+
+
+// bepaald de routes voor de pagina's die de gebruiker te zien krijgt 
 app
   .use(logger())
   // logt alle requests
@@ -220,6 +237,7 @@ app
     }));
   })
   .get('/top-tracks/:artistId', async(req, res) =>{
+    // geeft toptacks terug in de vorm van JSON voor een specifieke artiest
     const { artistId = '' } = req.params;
     const countryCode = req.query.country || 'NL';
 
@@ -233,12 +251,17 @@ app
     }
   })
   .get('/artist/:id', async (req, res) => {
+    // get requestr naar de pagina 
+    // toont de detailpagina van een artiest 
+    // wanneer de detailpagina wordt geopend word de functie uitgevoerd
     const artistId = req.params.id;
+    // haalt het id gedeelte uit de url op
     const countryCode = 'NL'
     const token = await getSpotifyToken();
     if (!token) return res.status(500).send('Error fetching token');
 
     try {
+      // get verzoek doen naar de spotify api om de info op te halen van deze artiest 
       const response = await fetch(`https://api.spotify.com/v1/artists/${artistId}`, {
         method: 'GET',
         headers: {
@@ -247,6 +270,7 @@ app
       });
 
       if (!response.ok) {
+        // fout/ error handling
         if (response.status === 404) {
           return res.status(404).send('Artist not found');
         }
@@ -254,8 +278,10 @@ app
       }
 
       const artist = await response.json();
+      // omzetten in json
 
       return res.send(renderTemplate('server/views/detail.liquid', {
+        // stuurt de gegevens naar de detail pagina 
         title: artist.name,
         artist: {
           name: artist.name,
@@ -265,6 +291,7 @@ app
           image: artist.images.length ? artist.images[0].url : null,
         },
     topTracks: await getTopTracks(artistId, countryCode),
+    //geef hier zowel artiesten info mee zowel als de toptracks 
         
       }));
 
@@ -279,6 +306,7 @@ app
   // Stuurt die gegevens naar een template om te renderen op de pagina
   
     const ids = getPlaylist();
+    // haalt de track ids op die in de server zijn opgeslagen
   
     if (!ids.length) {
       return res.send(renderTemplate('server/views/playlist.liquid', {
@@ -286,6 +314,7 @@ app
         items: []
       }));
     }
+    // als het leeg is krijg je een melding
   
     const token = await getSpotifyToken(); // ← Zorg dat je een geldige token krijgt
     if (!token) return res.status(500).send('No token');
@@ -299,6 +328,7 @@ app
           Authorization: `Bearer ${token}`
         }
       });
+      // voor elke opgeslagen id een api verzoek om de volledige trackinformatie op te halen
   
       if (!response.ok) {
         console.error(`Error fetching track ${id}:`, response.status);
@@ -307,8 +337,10 @@ app
   
       const track = await response.json();
       items.push(track);
+      // alleen tracks opslaan waarbij het ophalen goed ging
     }
   
+    // wanneer alles klaar is lijst met tracks naar de pagina sturen
     return res.send(renderTemplate('server/views/playlist.liquid', {
       title: 'Playlist',
       items
@@ -346,6 +378,7 @@ app.post('/api/playlist/:id', async (req, res) => {
   
 });
 app.post('/api/playlist', (req, res) => {
+  // post request 
   const { tracks } = req.body;
 
   if (!Array.isArray(tracks)) {

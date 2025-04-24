@@ -6,9 +6,11 @@ console.log('Hello, world!');
 const buttons = document.querySelectorAll('.add-playlist-button');
 
 buttons.forEach(button => {
+  // koppelt de buttons aan een actie om toe te voegen aan de playlist
   button.addEventListener('click', (e) => {
     const trackId = e.target.dataset.id; // Use the correct data attribute
     addToPlaylist(trackId);
+    // voegt de trackid toe aan de functie voor de addtoplaylist
   });
 });
 
@@ -23,7 +25,8 @@ function addToPlaylist(id) {
     localStorage.setItem('playlist', JSON.stringify(playlist));
     //kijken of het nummer er al in zit en anders word hij toegevoegd
 
-    // Send to server to update node-localstorage
+
+    // stuurt de id naar de server via een post request 
     fetch(`/api/playlist/${id}`, {
       method: 'POST'
     })

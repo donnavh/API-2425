@@ -152,11 +152,15 @@ const getTopTracks = async (artistId, countryCode)
 
  Ook gezien de tijd wist ik dat het nog lastig ging worden. In mijn hoofd wilde ik het graag echt laten werken maar dit is toch niet realistich dus heb ik het voor deze vorm op een andere manier gedaan. Ik maak een pagina die ik playlist noem om de tracks hierin te kunnen laten zien. en hier de tracks die ik wil toevoegen naartoe stuur. 
  Dus vanaf nu is er op de detailpagina van de artiest zijn informatie te zien en daaronder de beste nummers die je kan toevoegen. 
+Ik ben nog aan de gang gegaan met het maken van view transitions, die op de afbeeldingen van de kaarten gemaakt zijn en worden toegepast wanner de detail pagina geopend wordt. 
+Ik wilde natuurlijk graag dat de tracks in de playlist opgeslagen worden. Er staan al een paar items in de playlist om het op te vullen maar verder kan je je eigen tracks toevoegen. 
 
 
+<img src="/Scherm­afbeelding 2025-04-24 om 12.21.45.png" alt="">
+<img src="/Scherm­afbeelding 2025-04-24 om 12.22.07.png" alt="">
 
 
-gemaakte stappen: 
+Grootst gemaakte stappen: 
 - featured artists pagina
 - all artists pagina
 - detail pagina 
